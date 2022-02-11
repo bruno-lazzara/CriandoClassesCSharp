@@ -1,32 +1,48 @@
-﻿// using _05_ByteBank;
+﻿
 
 
 namespace _06_ByteBank
 {
     public class ContaCorrente
     {
-        public Cliente titular;
-        public int agencia;
-        public int numero;
-        public double saldo = 100; // Atribuído um valor padrão para um atributo dentro da classe.
+        public Cliente Titular { get; set; }
+        public int Agencia { get; set; }
+        public int Numero { get; set; }
 
-        // Função (Método) Sacar. Esta função precisa retornar um bool (se o saque foi possível ou não)
-        // e precisa receber um argumento, que é o valor que o usuário deseja sacar.
+        private double _saldo = 100; // A visibilidade desse atributo foi modificada para private.
+
+        public double Saldo
+        {
+            get
+            {
+                return _saldo;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    return;
+                }
+
+                _saldo = value; // value é uma palavra reservada dentro de set.
+            }
+        }
+
         public bool Sacar(double valor)
         {
-            if (this.saldo < valor)
+            if (_saldo < valor)
             {
                 return false;
             }
 
-            this.saldo -= valor;
+            _saldo -= valor;
             return true;
         }
 
         // Esse método não tem retorno (void), não devolve nada após sua execução.
         public void Depositar(double valor)
         {
-            this.saldo += valor;
+            _saldo += valor;
         }
         // É comum chamarmos de função quando há retorno na função, e de método quando não há retorno,
         // mas as duas formas estão corretas.
@@ -35,15 +51,15 @@ namespace _06_ByteBank
         // (que é um objeto do tipo ContaCorrente).
         public bool Transferir(double valor, ContaCorrente contaDestino)
         {
-            if (this.saldo < valor)
+            if (_saldo < valor)
             {
                 return false; // O return para imediatamente a execução do código.
             }
 
-            this.saldo -= valor;
+            _saldo -= valor;
             // Podemos chamar o método Depositar para realizar essa operação, sem precisarmos escrever
             // mais código para somar o valor ao saldo da outra conta corrente.
-            contaDestino.Depositar(valor); // contaDestino.saldo += valor
+            contaDestino.Depositar(valor);
             return true;
         }
     }
