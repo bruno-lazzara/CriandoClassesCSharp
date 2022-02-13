@@ -33,6 +33,8 @@ namespace _07_ByteBank
                 }
 
                 _agencia = value;
+                // value é uma palavra reservada dentro de set, e se refere ao valor inserido
+                // no momento da atribuição, por exemplo conta.Agencia = 867; -> value = 867.
             }
         }
 
